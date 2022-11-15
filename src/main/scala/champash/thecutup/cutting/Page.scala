@@ -1,4 +1,4 @@
-package champash.thecutup
+package champash.thecutup.cutting
 
 import scala.annotation.tailrec
 

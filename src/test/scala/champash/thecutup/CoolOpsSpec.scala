@@ -1,7 +1,7 @@
 package champash.thecutup
 
 import org.scalatest.{Matchers, WordSpec}
-import CoolOps._
+import champash.thecutup.cutting.CoolOps._
 
 class CoolOpsSpec extends WordSpec with Matchers {
   "interleave" should {

@@ -1,8 +1,7 @@
-package champash.thecutup
+package champash.thecutup.cutting
 
-import champash.thecutup.CuttingMachine.{CompressHorizontally, CompressVertically, StripedPage}
-
-import CoolOps._
+import champash.thecutup.cutting.CoolOps._
+import champash.thecutup.cutting.CuttingMachine.{CompressAll, StripedPage}
 
 import scala.util.Random
 
@@ -18,6 +17,6 @@ object Demo {
     val t = 2
     val random = new Random()
     random.setSeed(23)
-    CuttingMachine.cut(List(text1, text2, text3), w, h, t, Some(g), n, StripedPage, CompressHorizontally, CompressVertically, Some(random)).dump()
+    CuttingMachine.cut(List(text1, text2, text3), w, h, t, Some(g), n, StripedPage, CompressAll, Some(random)).dump()
   }
 }

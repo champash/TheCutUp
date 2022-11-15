@@ -1,6 +1,6 @@
-package champash.thecutup
+package champash.thecutup.cutting
 
-import champash.thecutup.CuttingMachine._
+import champash.thecutup.cutting.CuttingMachine._
 
 import scala.annotation.tailrec
 

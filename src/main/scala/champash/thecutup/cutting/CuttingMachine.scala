@@ -1,11 +1,21 @@
-package champash.thecutup
+package champash.thecutup.cutting
+
+import champash.thecutup.cutting.CoolOps._
 
 import scala.util.Random
-import CoolOps._
 
 object CuttingMachine {
 
   sealed trait MixMode
+
+  object MixMode {
+    val Map: Map[String, MixMode] = Seq(StripedPage, FreeLinear, NonLinear).map(mm => mm.toString -> mm).toMap
+
+    def apply(string: String): MixMode = {
+      require(Map.contains(string), s"No MixMode with name $string")
+      Map(string)
+    }
+  }
 
   case object StripedPage extends MixMode
 
@@ -14,6 +24,15 @@ object CuttingMachine {
   case object NonLinear extends MixMode
 
   sealed trait CompressionMode
+
+  object CompressionMode {
+    val Map: Map[String, CompressionMode] = Seq(Uncompressed, CompressVertically, CompressHorizontally, CompressAll).map(cm => cm.toString -> cm).toMap
+
+    def apply(string: String): CompressionMode = {
+      require(Map.contains(string), s"No CompressionMode with name $string")
+      Map(string)
+    }
+  }
 
   case object Uncompressed extends CompressionMode
 
@@ -41,7 +60,6 @@ object CuttingMachine {
           g: Option[Int],
           n: Int,
           cutMode: MixMode,
-          spacingMode: CompressionMode,
           compressionMode: CompressionMode,
           maybeRandom: Option[Random]): List[Page] = {
     val pagedTexts = texts.map(toPages(_, w, h, t, g, compressionMode))

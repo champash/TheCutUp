@@ -1,5 +1,6 @@
 package champash.thecutup
 
+import champash.thecutup.cutting.Page
 import org.scalatest.{Matchers, WordSpec}
 
 class PageSpec extends WordSpec with Matchers {
