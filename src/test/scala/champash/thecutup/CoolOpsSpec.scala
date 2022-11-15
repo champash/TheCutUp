@@ -11,27 +11,44 @@ class CoolOpsSpec extends WordSpec with Matchers {
     }
   }
   "detab" should {
-    "work" in {
+    "work when the tab comes first" in {
       val t = 8
-      val s = "\tblah\tblah blah \n\tblah blah blah"
-      s.detab(t) shouldBe "        blah    blah blah \n        blah blah blah"
+      val s = "\tblah"
+      s.detab(t) shouldBe "        blah"
+    }
+
+    "work when the tab comes in the middle" in {
+      val t = 8
+      val s = "blah\tblah"
+      s.detab(t) shouldBe "blah    blah"
+    }
+
+    "work when the tab comes at the end" in {
+      val t = 8
+      val s = "blah\t"
+      s.detab(t) shouldBe "blah    "
     }
   }
 
   "breakIntoPages" should {
-    "work" in {
-      val s =
-        """This is a line.
-          |This is a longer line which should be broken up a couple times.
-          |This line has a reallyreallyreallyreally long word.
-          |Longerlongerlongerlongerlongerlongerlongerlongerlonger.
-          |This long-long-long-long-long line has convenient dashes.
-          |""".stripMargin
-      val e = "This is a line.\nThis is a \nlonger line \nwhich should be "+
-        "\nbroken up a \ncouple times.\nThis line has a \nreallyreallyrea-\nllyreally " +
-        "long \nword.\nLongerlongerlon-\ngerlongerlonger-\nlongerlongerlon-\ngerlonger.\n" +
-        "This long-long-\nlong-long-long \nline has \nconvenient \ndashes."
-     s.breakIntoLines(16, 8).mkString("\n") shouldBe e
+    "work for natural breaks" in {
+      val s = "This text has\ntwo lines."
+      s.breakIntoLines(16, Some(8)) shouldBe List("This text has", "two lines.")
+    }
+
+    "work with dashes" in {
+      val s = "123456789abcde-f"
+      s.breakIntoLines(16, Some(8)) shouldBe List("123456789abcde-", "f")
+    }
+
+    "work with spaces" in {
+      val s = "123456789 abcdef"
+      s.breakIntoLines(16, Some(8)) shouldBe List("123456789 ", "abcdef")
+    }
+
+    "work with overlong words" in {
+      val s = "Pneumonoultramicroscopicsilicovolcanoconiosis"
+      s.breakIntoLines(16, Some(8)) shouldBe List("Pneumonoultramic", "roscopicsilicovo", "lcanoconiosis")
     }
   }
 }

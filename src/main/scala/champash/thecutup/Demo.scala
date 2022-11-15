@@ -18,6 +18,6 @@ object Demo {
     val t = 2
     val random = new Random()
     random.setSeed(23)
-    CuttingMachine.cut(List(text1, text2, text3), w, h, t, g, n, StripedPage, CompressHorizontally, CompressVertically, Some(random)).dump()
+    CuttingMachine.cut(List(text1, text2, text3), w, h, t, Some(g), n, StripedPage, CompressHorizontally, CompressVertically, Some(random)).dump()
   }
 }

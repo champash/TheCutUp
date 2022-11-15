@@ -49,18 +49,16 @@ object CoolOps {
         case ((s, i), c) => (s + c, i + 1)
       }._1
 
-    def breakIntoLines(w: Int, give: Int): List[String] = {
+    def breakIntoLines(w: Int, maybeGive: Option[Int]): List[String] = {
       @tailrec
       def loop(rem: String, acc: List[String]): List[String] = {
-        val tillNaturalLinebreak = rem.indexOf('\n')
-        val tillLastSpace = rem.take(w).lastIndexOf(' ') + 1
-        val tillLastDash = rem.take(w).lastIndexOf('-') + 1
-        val fallbackBreakpoint = w - 1
+        val tillNaturalLinebreak = rem.take(w).indexOf('\n')
+        val tillLastSpaceOrDash = Math.max(rem.take(w).lastIndexOf(' '), rem.take(w).lastIndexOf('-')) + 1
+        val fallbackBreakpoint = w
         if (rem.isEmpty) acc.reverse
-        else if (tillNaturalLinebreak >= 0 && tillNaturalLinebreak <= w) loop(rem.drop(tillNaturalLinebreak + 1), rem.take(tillNaturalLinebreak) :: acc)
-        else if (tillLastSpace > w - give) loop(rem.drop(tillLastSpace), rem.take(tillLastSpace) :: acc)
-        else if (tillLastDash > w - give) loop(rem.drop(tillLastDash), rem.take(tillLastDash) :: acc)
-        else loop(rem.drop(fallbackBreakpoint), rem.take(fallbackBreakpoint) + "-" :: acc)
+        else if (tillNaturalLinebreak >= 0) loop(rem.drop(tillNaturalLinebreak + 1), rem.take(tillNaturalLinebreak) :: acc)
+        else if (tillLastSpaceOrDash > w - maybeGive.getOrElse(w)) loop(rem.drop(tillLastSpaceOrDash), rem.take(tillLastSpaceOrDash) :: acc)
+        else loop(rem.drop(fallbackBreakpoint), rem.take(fallbackBreakpoint) :: acc)
       }
 
       loop(string, Nil)

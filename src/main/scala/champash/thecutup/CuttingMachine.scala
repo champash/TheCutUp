@@ -23,7 +23,7 @@ object CuttingMachine {
 
   case object CompressAll extends CompressionMode
 
-  def toPages(text: String, w: Int, h: Int, t: Int, g: Int, compressionMode: CompressionMode): List[Page] = {
+  def toPages(text: String, w: Int, h: Int, t: Int, g: Option[Int], compressionMode: CompressionMode): List[Page] = {
     text.detab(t)
       .breakIntoLines(w, g)
       .flatMap(_.grouped(w))
@@ -38,7 +38,7 @@ object CuttingMachine {
           w: Int,
           h: Int,
           t: Int,
-          g: Int,
+          g: Option[Int],
           n: Int,
           cutMode: MixMode,
           spacingMode: CompressionMode,
