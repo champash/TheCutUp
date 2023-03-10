@@ -3,6 +3,7 @@ package champash.thecutup.cutting
 import champash.thecutup.cutting.CuttingMachine._
 
 import scala.annotation.tailrec
+import scala.language.implicitConversions
 
 object CoolOps {
 

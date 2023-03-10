@@ -17,10 +17,15 @@ object CuttingMachine {
     }
   }
 
+  // Take a slice from each page until you have N slices, then shuffle the result.
   case object StripedPage extends MixMode
 
+  // Take a fully sliced page from each text and shuffle the result.
+  // This will be broken into multiple pages of output.
   case object FreeLinear extends MixMode
 
+  // Take all slices from all pages and shuffle the result.
+  // This will be broken down into multiple pages of output.
   case object NonLinear extends MixMode
 
   sealed trait CompressionMode
@@ -34,12 +39,16 @@ object CuttingMachine {
     }
   }
 
+  // Allow whitespace on sides and bottom.
   case object Uncompressed extends CompressionMode
 
+  // Remove empty lines.
   case object CompressVertically extends CompressionMode
 
+  // Remove trailing spaces.
   case object CompressHorizontally extends CompressionMode
 
+  // Remove empty lines and trailing spaces.
   case object CompressAll extends CompressionMode
 
   def toPages(text: String, w: Int, h: Int, t: Int, g: Option[Int], compressionMode: CompressionMode): List[Page] = {
